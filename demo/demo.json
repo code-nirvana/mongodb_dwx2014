@@ -1,0 +1,46 @@
+/*
+    Wiki
+    Demonstration with MongoDB
+ */
+
+// Wiki Eintrag
+{
+    title: "",
+    content: "",
+    author: {
+        name: "Michael Rahn",
+        email: "mr@deltra.com"
+    },
+    created_at: new Date("2014-07-15"),
+    comments: [
+        {
+            from: "Johnny Jones",
+            email: "johnny@jones.com",
+            date: new Date("2014-07-17"),
+            text: "Awesome codestyle"
+        }
+    ]
+}
+
+// Wiki Eintrag mit User Relation
+{
+    _id: 93659398693bfe35,
+    name: "Michael Rahn",
+    email: "mr@deltra.com"
+}
+
+{
+    title: "",
+    content: "",
+    author: ObjectId(93659398693bfe35),
+    created_at: new Date("2014-07-15"),
+    comments: [
+        {
+            from: "Johnny Jones",
+            email: "johnny@jones.com",
+            date: new Date("2014-07-17"),
+            text: "Awesome codestyle"
+        }
+    ]
+}
+

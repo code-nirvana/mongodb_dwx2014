@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>MongoDB - Was? Warum? Wie?</title>
+
+		<meta name="description" content="A simple approach to beat SQL.">
+		<meta name="author" content="André Meier, Michael Rahn">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/deltra.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+		<script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = 'css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+        <section id="title">
+          <img src="img/MongoDB_Logo.png" alt="MongoDB Logo" />
+          <h2>Was? Warum? Wie?</h2>
+        </section>
+
+        <section id="about_us" data-background="img/deltra-building-light.jpg" class="heading">
+          <div class="">
+            <h2>Über uns</h2>
+            <table>
+              <tbody>
+              <tr class="center">
+                <td>André Meier</td>
+                <td>Michael Rahn</td>
+              </tr>
+              <tr class="curly">
+                <td colspan="2"><span class="curly">}</span></td>
+              </tr>
+              <tr class="center">
+                <td colspan="2">
+                  <img class="fragment roll-in" src="img/deltra.png" alt="deltra Logo" width="50%" style="margin: 2.0em 0;"/>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="mongodb_definition" class="heading">
+          <h2>MongoDB ...</h2>
+          <div class="fragment list" data-fragment-index="1">
+            <ul>
+              <li>hochperformante</li>
+              <li>schema-freie</li>
+              <li>dokumentenorientierte</li>
+              <li>hochverfügbare</li>
+              <li>einfach zu skalierende</li>
+            </ul>
+          </div>
+          <div class="fragment" data-fragment-index="1">
+            <h3>NoSQL Datenbank</h3>
+          </div>
+        </section>
+
+        <section>
+          <section id="was">
+            <img src="img/wait-what.jpg" alt="Wait ... What?" width="100%"/>
+            <p class="caption">http://uturncrossfit.com/wp-content/uploads/2014/04/wait-what.jpg</p>
+          </section>
+        </section>
+
+        <section>
+          <section id="nosql_grundlagen" class="heading">
+            <h2>NoSQL?</h2>
+
+            <div class="expression">
+              <h3>Not only SQL</h3>
+              <h3>Nicht relationale Datenbanken</h3>
+            </div>
+          </section>
+
+          <section id="nosql_overview">
+            <img class="border" src="img/nosql-dbs.png" alt="NoSQL Databases" width="80%"/>
+            <p class="caption">http://bibletech.kellerdavis.com/imgs/nosql-dbs.png</p>
+          </section>
+
+          <section id="nosql_typen">
+            <h3>Verschiedene Typen</h3>
+            <ul>
+              <li>Key/Value</li>
+              <li>BigTable</li>
+              <li>Document/Object</li>
+              <li>Graph</li>
+            </ul>
+          </section>
+
+          <section id="nosql_vorteile" class="heading">
+            <h2>Vorteile ggü. RDBMS</h2>
+            <div class="list">
+              <ul>
+                <li>Verarbeitung großer Datenmengen</li>
+                <li>Speichern unstrukturierter Daten</li>
+                <li>einfache, horizontale Skalierung</li>
+                <li>Datenzugriff über APIs</li>
+                <li>Keine JOINS</li>
+              </ul>
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section id="warum_mongodb">
+            <h2>Warum MongoDB?</h2>
+          </section>
+          <section id="installation">
+            <h2>Einfache Installation</h2>
+            <pre>
+              <code class="no-highlight">
+sudo apt-get install mongodb
+              </code>
+              <code class="no-highlight">
+brew install mongodb
+              </code>
+            </pre>
+          </section>
+
+          <section id="dokumentation">
+            <h2>Gute Dokumentation</h2>
+          </section>
+
+          <section id="driver">
+            <h2>Einsteigerfreundlich</h2>
+            <a href="http://docs.mongodb.org/ecosystem/drivers/" target="_blank">http://docs.mongodb.org/ecosystem/drivers/</a>
+          </section>
+
+          <section id="sql_comparison1">
+            <h3>Datenbank &rightarrow; Datenbank</h3>
+            <pre>
+              <code class="no-highlight">
+> show dbs
+dwx2014
+local
+system.indexes
+
+> use dwx2014
+switched to db dwx2014
+              </code>
+            </pre>
+          </section>
+
+          <section id="sql_comparison2">
+            <h3>Tables &rightarrow; Collections</h3>
+            <pre>
+              <code class="no-highlight">
+> show collections
+locations
+tracks
+users
+...
+
+> db.users.count()
+1337
+
+> db.users.find()
+{_id: ObjectId("53b2cc2ece662e0000116e3a"), name: "Johnny", isSpeaker: false, ...}
+{_id: ObjectId("53b4cc3ade662e0000117e3b"), name: "Jane", isSpeaker: true, ...}
+...
+              </code>
+            </pre>
+          </section>
+
+          <section id="sql_comparison3">
+            <h3>Rows &rightarrow; Documents</h3>
+            <pre>
+              <code class="no-highlight">
+{
+  _id: ObjectId("53b2cc2ece662e0000116e3a"),
+  name: "Johnny",
+  isSpeaker: false,
+  email: "Johnny@dwx2014.com"
+}
+              </code>
+            </pre>
+          </section>
+
+          <section id="dokumenten_basiert">
+            <h2>Dokumenten basiert</h2>
+            <pre>
+              <code class="javascript" data-trim>
+{
+  _id: ObjectId("53b2cc2ece662e0000116e3a"),
+  name: "Johnny",
+  email: "johnny@dwx2014.com",
+  address: {
+    street: "Developerstr. 42",
+    zipcode: "12345",
+    city: "Developer City",
+    country: "Nowhere"
+  },
+  register_date: ISODate("2014-07-15"),
+  likes: 42,
+  dislikes: 0,
+  favorite_superheros: ["Thor", "Hulk", "Ironman"]
+}
+              </code>
+            </pre>
+          </section>
+
+          <section id="dynamic_queries">
+            <h2>Dynamic Queries</h2>
+          </section>
+
+          <section id="dynamic_queries1">
+            <h3>Get all users</h3>
+            <pre>
+              <code class="sql">
+SELECT * FROM users
+              </code>
+              <code class="no-highlight">
+db.users.find()
+              </code>
+            </pre>
+          </section>
+
+          <section id="dynamic_queries2">
+            <h3>Get user with name</h3>
+            <pre>
+              <code class="sql">
+SELECT * FROM users WHERE name = "Johnny"
+              </code>
+              <code class="no-highlight">
+db.users.find({name: "Johnny"})
+              </code>
+            </pre>
+          </section>
+
+          <section id="dynamic_queries3">
+            <h3>Get first 5 users sort by name</h3>
+            <pre>
+              <code class="sql">
+SELECT TOP 5 * FROM users ORDER BY name
+              </code>
+            </pre>
+            <pre>
+              <code class="no-highlight">
+db.users.find().limit(5).sort({name:1})
+              </code>
+            </pre>
+          </section>
+
+          <section>
+            <h2>Query Operators</h2>
+          </section>
+
+          <section>
+            <pre>
+              <code class="no-highlight">
+$all                                $mod
+$elemMatch                          $ne
+$exists                             $nin
+$gt                                 $not
+$gte                                $size
+$lt                                 $type
+$lte                                $where
+$in
+              </code>
+            </pre>
+          </section>
+
+          <section>
+            <h3>Get users with >= 10 likes</h3>
+            <pre>
+              <code class="javascript">
+db.users.find(likes: {$gte: 10})
+              </code>
+            </pre>
+          </section>
+
+          <section>
+            <h3>Get users younger than 24</h3>
+            <pre>
+              <code class="javascript">
+db.users.find(age: {$lt: 24})
+              </code>
+            </pre>
+          </section>
+
+          <section id="indexes">
+            <h2>Indexes</h2>
+          </section>
+
+          <section id="indexes1">
+            <pre>
+              <h3>Ascending</h3>
+              <code class="javascript">
+db.users.ensureIndex({name: 1})
+              </code>
+              <h3>Descending</h3>
+              <code class="javascript">
+db.users.ensureIndex({age: -1})
+              </code>
+            </pre>
+          </section>
+
+          <section>
+            <h3>Background - non blocking</h3>
+            <pre>
+              <code class="javascript">
+db.users.ensureIndex({name: 1}, {background: true})
+
+Index name: "name_1"
+              </code>
+            </pre>
+          </section>
+
+          <section>
+            <h3>Index names</h3>
+            <pre>
+              <code class="javascript">
+db.users.ensureIndex({name: 1}, {name: "indexName"})
+
+Index name: "indexName"
+              </code>
+            </pre>
+          </section>
+
+          <section id="aggregation">
+            <h2>Aggregation</h2>
+            <img src="img/aggregation-pipeline.png" alt="Aggregation Pipeline"/>
+            <p class="caption">http://docs.mongodb.org/manual/_images/aggregation-pipeline.png</p>
+          </section>
+
+          <section id="aggregation_single">
+            <h2>Single Purpose Aggregation</h2>
+          </section>
+
+          <section id="aggregation_single1">
+            <h3>Count</h3>
+            <pre>
+              <code class="no-highlight">
+> db.users.count()
+1337
+
+> db.users.count({isSpeaker: true})
+42
+              </code>
+            </pre>
+          </section>
+
+          <section id="aggregation_single2">
+            <h3>Distinct</h3>
+            <pre>
+              <code class="no-highlight">
+> db.users.find()
+{firstname: "Max", lastname: "Mustermann", age: "21"}
+{firstname: "Michael", lastname: "Rahn", age: "27"}
+{firstname: "Max", lastname: "Meier", age: "27"}
+
+> db.users.distinct( "firstname" )
+[ "Max", "Michael" ]
+              </code>
+            </pre>
+          </section>
+
+          <section id="aggregation_single3">
+            <h3>Group</h3>
+            <table>
+              <tr>
+                <td width="30%">
+                  <pre>
+              <code class="no-highlight">
+Collection:
+{x: 1, likes: 3}
+{x: 1, likes: 7}
+{x: 2, likes: 4}
+{x: 2, likes: 1}
+{x: 4, likes: 9}
+{x: 1, likes: 2}
+{x: 3, likes: 3}
+              </code>
+            </pre>
+                </td>
+                <td>
+                        <pre>
+              <code class="javascript">
+db.collection.group({
+  key: {x: 1},
+  cond: {x: { $lt: 3 }},
+  reduce: function(current, result) {
+    result.likes += current.likes;
+  },
+  init: { likes: 0 }
+})
+
+Result:
+[
+  {x: 1, likes: 12},
+  {x: 2, likes: 5}
+]
+              </code>
+            </pre>
+                </td>
+              </tr>
+            </table>
+          </section>
+
+          <section id="map_reduce">
+            <h2>Map/Reduce</h2>
+            <img src="img/map-reduce.png" alt="Map/Reduce Example from mongodb.org" width="80%"/>
+            <p class="caption">http://docs.mongodb.org/manual/_images/map-reduce.png</p>
+          </section>
+
+          <section id="replication">
+            <h2>Replication</h2>
+          </section>
+          <section id="replication_readwrite">
+            <h3>Read/Write Default Routing</h3>
+            <img src="img/replica-set-read-write-operations-primary.png" alt="MongoDB Replication Read/Write"/>
+            <p class="caption">http://docs.mongodb.org/manual/_images/replica-set-read-write-operations-primary.png</p>
+          </section>
+          <section id="replication_twosecondaries">
+            <h3>Migration</h3>
+            <img src="img/replica-set-primary-with-two-secondaries.png" alt=""/>
+            <p class="caption">http://docs.mongodb.org/manual/_images/replica-set-primary-with-two-secondaries.png</p>
+          </section>
+          <section id="replication_election">
+            <h3>Failover</h3>
+            <img src="img/replica-set-trigger-election.png" alt="MongoDB Replication Trigger election"/>
+            <p class="caption">http://docs.mongodb.org/manual/_images/replica-set-trigger-election.png</p>
+          </section>
+
+          <section id="auto_sharding">
+            <h2>Sharding</h2>
+            <img src="img/sharded-cluster-production-architecture.png"
+                 alt="Example Configuration of a sharded cluster for production purposes from mongodb.org"/>
+            <p class="caption">http://docs.mongodb.org/manual/_images/sharded-cluster-production-architecture.png</p>
+          </section>
+        </section>
+
+        <section>
+          <h2>Demo</h2>
+        </section>
+
+        <section>
+          <h2>Fragen</h2>
+        </section>
+
+
+      </div> <!-- slides -->
+		</div> <!-- reveal -->
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+    <script src="config.js"></script>
+
+	</body>
+</html>
